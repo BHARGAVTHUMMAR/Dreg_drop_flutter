@@ -154,15 +154,15 @@ class HomeView extends GetView<HomeController> {
                     );
                   },
                   onWillAccept: (data) {
+                    return true;
+                  },
+                  onAccept: (data) {
                     controller.number.remove(data);
                     String acceptData = data![0].toString();
                     print(acceptData);
                     controller.dragNumber.add(acceptData);
                     print(controller.dragNumber);
                     print("object");
-                    return true;
-                  },
-                  onAccept: (data) {
                     print("object");
                   },
                 ),
@@ -181,6 +181,9 @@ class HomeView extends GetView<HomeController> {
                           );
                         },
                         onWillAccept: (data) {
+                          return true;
+                        },
+                        onAccept: (data) {
                           controller.dragNumber.remove(data);
                           String acceptData = data![0].toString();
                           print(acceptData);
@@ -188,9 +191,6 @@ class HomeView extends GetView<HomeController> {
                           print(controller.number);
                           print("object");
                           controller.condition.value = false;
-                          return true;
-                        },
-                        onAccept: (data) {
                           print("object");
                         },
                       ),
