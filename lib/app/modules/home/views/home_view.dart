@@ -24,24 +24,37 @@ class HomeView extends GetView<HomeController> {
                 child: Container(
                   margin: EdgeInsets.only(left: 5),
                   height: 100,
-                  child: (controller.number.isEmpty)
-                      ? Container()
-                      : GridView.builder(
-                          itemCount: controller.number.length,
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            return Container(
+                  child: GridView.builder(
+                      itemCount: controller.number.length,
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          alignment: Alignment.center,
+                          color: Colors.orange,
+                          child: Draggable(
+                            data: [
+                              controller.number[index],
+                            ],
+                            child: Container(
                               alignment: Alignment.center,
-                              color: Colors.orange,
-                              child: Draggable(
-                                data: [
-                                  controller.number[index],
-                                ],
-                                child: Container(
+                              height: 50,
+                              width: 50,
+                              child: Text(
+                                "${controller.number[index]}",
+                                style: TextStyle(
+                                    fontSize: 25, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            feedback: Container(
+                              height: 100,
+                              width: 100,
+                              child: Scaffold(
+                                body: Container(
+                                  height: 100,
+                                  width: 100,
                                   alignment: Alignment.center,
-                                  height: 50,
-                                  width: 50,
+                                  color: Colors.orange,
                                   child: Text(
                                     "${controller.number[index]}",
                                     style: TextStyle(
@@ -49,36 +62,19 @@ class HomeView extends GetView<HomeController> {
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
-                                feedback: Container(
-                                  height: 100,
-                                  width: 100,
-                                  child: Scaffold(
-                                    body: Container(
-                                      height: 100,
-                                      width: 100,
-                                      alignment: Alignment.center,
-                                      color: Colors.orange,
-                                      child: Text(
-                                        "${controller.number[index]}",
-                                        style: TextStyle(
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                onDragCompleted: () {
-                                  controller.number.removeAt(index);
-                                },
-                                maxSimultaneousDrags: 1,
                               ),
-                            );
-                          },
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 1,
-                                  crossAxisSpacing: 5,
-                                  mainAxisSpacing: 3)),
+                            ),
+                            onDragCompleted: () {
+                              controller.number.removeAt(index);
+                            },
+                            maxSimultaneousDrags: 1,
+                          ),
+                        );
+                      },
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 1,
+                          crossAxisSpacing: 5,
+                          mainAxisSpacing: 3)),
                 ),
               ),
               Spacer(),
@@ -158,7 +154,7 @@ class HomeView extends GetView<HomeController> {
                   },
                   onAccept: (data) {
                     controller.number.remove(data);
-                    String acceptData = data![0].toString();
+                    String acceptData = data[0].toString();
                     print(acceptData);
                     controller.dragNumber.add(acceptData);
                     print(controller.dragNumber);
@@ -184,12 +180,10 @@ class HomeView extends GetView<HomeController> {
                           return true;
                         },
                         onAccept: (data) {
-                          controller.dragNumber.remove(data);
+                          // controller.dragNumber.remove(data);
                           String acceptData = data[0].toString();
-                          int acceptDataIndex =
-                              int.parse(data[0].toString()) - 1;
                           print(acceptData);
-                          controller.number.insert(acceptDataIndex, acceptData);
+                          controller.number.add(acceptData);
                           print(controller.number);
                           print("object");
                           controller.condition.value = false;
