@@ -185,9 +185,11 @@ class HomeView extends GetView<HomeController> {
                         },
                         onAccept: (data) {
                           controller.dragNumber.remove(data);
-                          String acceptData = data![0].toString();
+                          String acceptData = data[0].toString();
+                          int acceptDataIndex =
+                              int.parse(data[0].toString()) - 1;
                           print(acceptData);
-                          controller.number.add(acceptData);
+                          controller.number.insert(acceptDataIndex, acceptData);
                           print(controller.number);
                           print("object");
                           controller.condition.value = false;
